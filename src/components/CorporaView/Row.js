@@ -30,6 +30,7 @@ const Row = ({
   resetCheckedColumn,
   resetCheckedAll,
   reRender,
+  number,
   /* eslint-disable react/prop-types */
   showEntryId,
   selectDisabled,
@@ -40,6 +41,7 @@ const Row = ({
   id, /* new!!!!! */
   moveListItem, /* new!!!!! */
   dragAndDropEntries, /* new!!!!! */
+  dnd_enabled, /* new!!!!!! */
   entries /* new!!!!! */
   /* eslint-enable react/prop-types */
 }) => {
@@ -150,7 +152,7 @@ const Row = ({
   return (
     <tr style={isDragging ? { opacity: "0" } : (disabled_flag ? { opacity: "0.5" } : {})} ref={preview} id={id} data-handler-id={handlerId}>
       {/* new!!!!! */}
-      <Table.Cell style={(mode === "edit") ? {} : { display: "none" }}>
+      <Table.Cell style={(dnd_enabled && (mode === "edit")) ? {} : { display: "none" }}>
         <div ref={dragDropRef}>
           <Button.Group basic className="lingvo-buttons-group">
             <Button icon={<i className="lingvo-icon lingvo-icon_dnd" />} />
@@ -208,6 +210,7 @@ const Row = ({
           entitiesMode={entitiesMode}
           disabled={disabled_flag}
           reRender={reRender}
+          number={number}
           /*index={index}*/ /* new!!!!! */
         />
       ))}
@@ -262,10 +265,12 @@ Row.propTypes = {
   resetCheckedColumn: PropTypes.func,
   resetCheckedAll: PropTypes.func,
   reRender: PropTypes.func,
+  number: PropTypes.string,
   id: PropTypes.array, /*  ????? new!!!!! */
   index: PropTypes.number, /*  ????? new!!!!! */
   moveListItem: PropTypes.func, /* new!!!!! */
   dragAndDropEntries: PropTypes.func, /* new!!!!! */
+  dnd_enabled: PropTypes.bool, /* new!!!!! */
   entries: PropTypes.array, /* new!!!!! */
 };
 
@@ -296,8 +301,11 @@ export default onlyUpdateForKeys([
   "checkedColumn",
   "checkedAll",
   "columns",
+  "number",
   "id", /*  ????? new!!!!! */
   "index", /*  ????? new!!!!! */
+  "dnd_enabled", /* ???????? new!!!!! */
+
   /*"moveListItem",*/ /* new!!!!! */
   "entries" /* new!!!!! */
 ])(Row);
